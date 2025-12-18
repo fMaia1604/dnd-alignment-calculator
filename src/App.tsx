@@ -1,12 +1,15 @@
 import { Button, DialogTrigger, Popover } from "react-aria-components";
 import "./App.css";
 import Calculator from "./components/Calculator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { applyTheme } from "./themes/utils";
+import { DEFAULT_THEME } from "./themes";
 
 type ThemeButton = {
   label: string;
   lawfulScale: "LAWFUL" | "NEUTRAL" | "CHAOTIC";
   goodScale: "GOOD" | "NEUTRAL" | "EVIL";
+  theme?: string;
 };
 
 const themeButtons: ThemeButton[] = [
@@ -14,16 +17,19 @@ const themeButtons: ThemeButton[] = [
     label: "Lawful Good",
     lawfulScale: "LAWFUL",
     goodScale: "GOOD",
+    theme: "lawfulGood",
   },
   {
     label: "Neutral Good",
     lawfulScale: "NEUTRAL",
     goodScale: "GOOD",
+    theme: "neutralGood",
   },
   {
     label: "Chaotic Good",
     lawfulScale: "CHAOTIC",
     goodScale: "GOOD",
+    theme: "chaoticGood",
   },
   {
     label: "Lawful Neutral",
@@ -64,6 +70,11 @@ function App() {
   const [goodScale, setGoodScale] = useState<ThemeButton["goodScale"] | null>(
     null
   );
+
+  useEffect(() => {
+    applyTheme(DEFAULT_THEME);
+  }, []);
+
   return (
     <div className="flex flex-row w-full ">
       <div className="flex w-full flex-col relative mx-auto">
@@ -74,13 +85,14 @@ function App() {
           Change Theme
         </Button>
         <Popover placement="bottom end">
-          <div className="grid grid-cols-3 bg-gray-500 rounded-xl gap-2 p-2">
+          <div className="grid grid-cols-3 bg-primary rounded-xl gap-2 p-2">
             {themeButtons.map((b) => (
               <button
                 className="rounded-xl p-2"
                 onClick={() => {
                   setLawfulScale(b.lawfulScale);
                   setGoodScale(b.goodScale);
+                  if (b.theme) applyTheme(b.theme);
                 }}
               >
                 {b.label}
