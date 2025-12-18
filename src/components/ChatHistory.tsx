@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { ChatBubble } from "../App";
 import { AnimatePresence, motion } from "framer-motion";
+import { TypeAnimation } from "react-type-animation";
 
 export function ChatHistory({ chatHistory }: { chatHistory: ChatBubble[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,7 +38,12 @@ function ChatBubble({ chatBubble }: { chatBubble: ChatBubble }) {
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
     >
-      {chatBubble.message}
+      <TypeAnimation
+        sequence={[chatBubble.message]}
+        wrapper="span"
+        cursor={false}
+        style={{ display: "inline-block" }}
+      ></TypeAnimation>
     </motion.div>
   );
 }
