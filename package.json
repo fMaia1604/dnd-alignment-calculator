@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
     "motion": "^12.23.26",
     "react": "^19.2.0",
     "react-aria-components": "^1.14.0",
     "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.18",
     "typewriter-effect": "^2.22.0"
   },
   "devDependencies": {
