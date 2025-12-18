@@ -1,37 +1,62 @@
 import React, { useEffect, useState } from "react";
 import "./Calculator.css";
+import type { ThemeButton } from "../App";
 
-const BUTTONS: Array<{ label: string; value?: string; className?: string }> = [
+const BUTTONS: Array<{
+  label: string;
+  romanLabel?: string;
+  binaryLabel?: string;
+  value?: string;
+  className?: string;
+}> = [
   { label: "C", className: "btn function", value: "clear" },
   { label: "+/-", className: "btn function", value: "negate" },
   { label: "%", className: "btn function", value: "percent" },
   { label: "/", className: "btn operator", value: "/" },
 
-  { label: "7", value: "7" },
-  { label: "8", value: "8" },
-  { label: "9", value: "9" },
+  { label: "7", value: "7", romanLabel: "VII", binaryLabel: "0111" },
+  { label: "8", value: "8", romanLabel: "VIII", binaryLabel: "1000" },
+  { label: "9", value: "9", romanLabel: "IX", binaryLabel: "1001" },
   { label: "*", className: "btn operator", value: "*" },
 
-  { label: "4", value: "4" },
-  { label: "5", value: "5" },
-  { label: "6", value: "6" },
+  { label: "4", value: "4", romanLabel: "IV", binaryLabel: "0100" },
+  { label: "5", value: "5", romanLabel: "V", binaryLabel: "0101" },
+  { label: "6", value: "6", romanLabel: "VI", binaryLabel: "0110" },
   { label: "-", className: "btn operator", value: "-" },
 
-  { label: "1", value: "1" },
-  { label: "2", value: "2" },
-  { label: "3", value: "3" },
+  { label: "1", value: "1", romanLabel: "I", binaryLabel: "0001" },
+  { label: "2", value: "2", romanLabel: "II", binaryLabel: "0010" },
+  { label: "3", value: "3", romanLabel: "III", binaryLabel: "0011" },
   { label: "+", className: "btn operator", value: "+" },
 
-  { label: "0", value: "0", className: "btn zero" },
+  { label: "0", value: "0", romanLabel: "Ø", binaryLabel: "0000" },
   { label: ".", value: "." },
   { label: "=", className: "btn operator equals", value: "=" },
 ];
 
-export default function Calculator() {
+export default function Calculator({
+  lawfulScale,
+  goodScale,
+}: {
+  lawfulScale: ThemeButton["lawfulScale"] | null;
+  goodScale: ThemeButton["goodScale"] | null;
+}) {
+  console.log(lawfulScale);
+  const [buttons, setButtons] = useState<
+    {
+      label: string;
+      value?: string;
+      className?: string;
+    }[]
+  >(BUTTONS);
   const [display, setDisplay] = useState<string>("0");
   const [previous, setPrevious] = useState<number | null>(null);
   const [operator, setOperator] = useState<string | null>(null);
   const [waitingForNew, setWaitingForNew] = useState<boolean>(false);
+
+  useEffect(() => {
+    setButtons(BUTTONS);
+  }, [lawfulScale, goodScale]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -166,7 +191,50 @@ export default function Calculator() {
     setWaitingForNew(true);
   }
 
+  function changeLabel(
+    b: (typeof BUTTONS)[number],
+    label: "romanLabel" | "binaryLabel"
+  ) {
+    return b[label] ? b[label] : b["label"];
+  }
+
   function onButton(value?: string) {
+    if (
+      lawfulScale === "CHAOTIC" ||
+      (lawfulScale === "NEUTRAL" && Math.random() > 0.5)
+    ) {
+      setButtons(
+        buttons
+          .map((b) => ({ sort: Math.random(), value: b }))
+          .sort((a, b) => a.sort - b.sort)
+          .map((b) => b.value)
+      );
+    }
+    if (
+      lawfulScale === "CHAOTIC" ||
+      (lawfulScale === "NEUTRAL" && Math.random() > 0.5)
+    ) {
+      if (Math.random() > 0.5)
+        setButtons(
+          buttons.map((b) => ({
+            ...b,
+            label: changeLabel(
+              BUTTONS.find((i) => i.value === b.value)!,
+              "romanLabel"
+            ),
+          }))
+        );
+      else
+        setButtons(
+          buttons.map((b) => ({
+            ...b,
+            label: changeLabel(
+              BUTTONS.find((i) => i.value === b.value)!,
+              "binaryLabel"
+            ),
+          }))
+        );
+    }
     if (!value) return;
     if (/^[0-9]$/.test(value) || value === ".") return handleInput(value);
     if (value === "clear") return clearAll();
@@ -187,7 +255,7 @@ export default function Calculator() {
         </div>
       </div>
       <div className="buttons">
-        {BUTTONS.map((b, idx) => (
+        {buttons.map((b, idx) => (
           <button
             key={idx}
             className={`btn ${b.className || ""}`}

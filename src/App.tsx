@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { applyTheme } from "./themes/utils";
 import { DEFAULT_THEME } from "./themes";
 
-type ThemeButton = {
+export type ThemeButton = {
   label: string;
   lawfulScale: "LAWFUL" | "NEUTRAL" | "CHAOTIC";
   goodScale: "GOOD" | "NEUTRAL" | "EVIL";
@@ -78,7 +78,7 @@ function App() {
   return (
     <div className="flex flex-row w-full ">
       <div className="flex w-full flex-col relative mx-auto">
-        <Calculator />
+        <Calculator lawfulScale={lawfulScale} goodScale={goodScale} />
       </div>
       <DialogTrigger>
         <Button className="absolute right-5 top-5 bg-gray p-2 h-fit rounded-xl">

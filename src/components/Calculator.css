@@ -1,5 +1,5 @@
 .calculator {
-  width: 320px;
+  width: 388px;
   margin: 2rem auto;
   background: linear-gradient(180deg, #f6f7fb, #ffffff);
   border-radius: 12px;
@@ -52,6 +52,7 @@
 
 .btn {
   height: 56px;
+  width: 83px;
   border-radius: 8px;
   border: none;
   background: #e6e9ef;
