@@ -195,7 +195,8 @@ export default function Calculator({
     setOperator(null);
     setWaitingForNew(true);
     setTimeout(
-      () => addChatBubble({ message: `Result is ${result}`, sender: "BOT" }),
+      () =>
+        addChatBubble({ message: getRandomSentence(result), sender: "BOT" }),
       1000
     );
   }
@@ -257,6 +258,74 @@ export default function Calculator({
     if (value === "percent") return percent();
     if (value === "=") return handleEquals();
     if (["+", "-", "*", "/"].includes(value)) return handleOperator(value);
+  }
+
+  function getRandomSentence(result: number) {
+    if (lawfulScale === "LAWFUL" && goodScale === "GOOD")
+      return [
+        `The correct result, calculated honestly and fairly, is ${result}.`,
+        `Justice and math agree: the answer is ${result}.`,
+        `I have followed every rule. The result is ${result}.`,
+      ][Math.floor(Math.random() * 3)];
+
+    if (lawfulScale === "NEUTRAL" && goodScale === "GOOD")
+      return [
+        `Here you go — the answer is ${result}. Hope it helps.`,
+        `I did the math so you don’t have to. It’s ${result}.`,
+        `The result is ${result}. Use it wisely.`,
+      ][Math.floor(Math.random() * 3)];
+
+    if (lawfulScale === "CHAOTIC" && goodScale === "GOOD")
+      return [
+        `Boom! The answer is ${result} — go make something cool with it.`,
+        `Rules bent, math intact: ${result}.`,
+        `I might’ve taken a wild path, but the answer is ${result}.`,
+      ][Math.floor(Math.random() * 3)];
+
+    if (lawfulScale === "LAWFUL" && goodScale === "NEUTRAL")
+      return [
+        `According to the defined inputs, the result is ${result}.`,
+        `Calculation complete. Output: ${result}.`,
+        `No interpretation needed. The answer is ${result}.`,
+      ][Math.floor(Math.random() * 3)];
+
+    if (lawfulScale === "NEUTRAL" && goodScale === "NEUTRAL")
+      return [
+        `The numbers balance out to ${result}.`,
+        `After processing the values, the result is ${result}.`,
+        `It is neither right nor wrong. It is ${result}.`,
+      ][Math.floor(Math.random() * 3)];
+
+    if (lawfulScale === "CHAOTIC" && goodScale === "NEUTRAL")
+      return [
+        `I pressed some buttons. The answer is ${result}.`,
+        `Math happened. Don’t ask how. It’s ${result}.`,
+        `Could’ve gone differently, but here we are: ${result}.`,
+      ][Math.floor(Math.random() * 3)];
+
+    if (lawfulScale === "LAWFUL" && goodScale === "EVIL")
+      return [
+        `The calculation is complete. The answer is ${result}.`,
+        `By strict logic and cold precision, the result is ${result}.`,
+        `You follow the formula. You get ${result}.`,
+      ][Math.floor(Math.random() * 3)];
+
+    if (lawfulScale === "NEUTRAL" && goodScale === "EVIL")
+      return [
+        `The answer is ${result}. Do what you want with it.`,
+        `You needed a result. Here’s ${result}.`,
+        `It benefits me to tell you the answer is ${result}.`,
+      ][Math.floor(Math.random() * 3)];
+
+    if (lawfulScale === "CHAOTIC" && goodScale === "EVIL")
+      return [
+        `HAHA. The numbers scream ${result}.`,
+        `I tore the math apart and got ${result}.`,
+        `Everything burns, but the answer is ${result}.`,
+      ][Math.floor(Math.random() * 3)];
+
+    // Fallback (should never happen)
+    return `The answer is ${result}.`;
   }
 
   return (
