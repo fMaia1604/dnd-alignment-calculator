@@ -106,7 +106,11 @@ function App() {
           <div className="grid grid-cols-3 bg-primary rounded-xl gap-2 p-2">
             {themeButtons.map((b) => (
               <button
-                className="rounded-xl p-2"
+                className={`rounded-xl p-2 ${
+                  lawfulScale === b.lawfulScale && goodScale === b.goodScale
+                    ? "border border-white"
+                    : ""
+                }`}
                 onClick={() => {
                   setLawfulScale(b.lawfulScale);
                   setGoodScale(b.goodScale);
