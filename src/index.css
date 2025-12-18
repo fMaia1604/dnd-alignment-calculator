@@ -4,6 +4,10 @@
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-accent: var(--color-accent);
+  --color-buttons: var(--color-buttons);
+  --color-buttons-content: var(--color-buttons-content);
+  --color-display: var(--color-display);
+  --color-display-content: var(--color-display-content);
 }
 
 :root {
