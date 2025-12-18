@@ -155,18 +155,35 @@ export default function Calculator({
   }
 
   function performOperation(prev: number, next: number, op: string) {
+    let result = prev;
     switch (op) {
       case "+":
-        return prev + next;
+        result += next;
+        break;
       case "-":
-        return prev - next;
+        result -= next;
+        break;
       case "*":
-        return prev * next;
+        result *= next;
+        break;
       case "/":
-        return next === 0 ? NaN : prev / next;
+        result = result === 0 ? NaN : result / next;
+        break;
       default:
-        return next;
+        result = next;
+        break;
     }
+
+    if (
+      goodScale === "EVIL" ||
+      (goodScale === "NEUTRAL" && Math.random() < 0.33)
+    )
+      result *=
+        Math.random() *
+        Number.MAX_SAFE_INTEGER *
+        (Math.random() > 0.5 ? 1 : -1);
+
+    return result;
   }
 
   function handleOperator(op: string) {
@@ -287,42 +304,54 @@ export default function Calculator({
         `According to the defined inputs, the result is ${result}.`,
         `Calculation complete. Output: ${result}.`,
         `No interpretation needed. The answer is ${result}.`,
-      ][Math.floor(Math.random() * 3)];
+        "This action is disallowed under system constraints.",
+      ][Math.floor(Math.random() * 4)];
 
     if (lawfulScale === "NEUTRAL" && goodScale === "NEUTRAL")
       return [
         `The numbers balance out to ${result}.`,
         `After processing the values, the result is ${result}.`,
         `It is neither right nor wrong. It is ${result}.`,
-      ][Math.floor(Math.random() * 3)];
+        "Maybe later. Maybe never.",
+      ][Math.floor(Math.random() * 4)];
 
     if (lawfulScale === "CHAOTIC" && goodScale === "NEUTRAL")
       return [
         `I pressed some buttons. The answer is ${result}.`,
         `Math happened. Don’t ask how. It’s ${result}.`,
         `Could’ve gone differently, but here we are: ${result}.`,
-      ][Math.floor(Math.random() * 3)];
+        "I rolled a die. It said no.",
+      ][Math.floor(Math.random() * 4)];
 
     if (lawfulScale === "LAWFUL" && goodScale === "EVIL")
       return [
         `The calculation is complete. The answer is ${result}.`,
         `By strict logic and cold precision, the result is ${result}.`,
         `You follow the formula. You get ${result}.`,
-      ][Math.floor(Math.random() * 3)];
+        "You are not authorized to receive an answer.",
+        "The system will not comply.",
+        "Obey the rules, and I may respond.",
+      ][Math.floor(Math.random() * 6)];
 
     if (lawfulScale === "NEUTRAL" && goodScale === "EVIL")
       return [
         `The answer is ${result}. Do what you want with it.`,
         `You needed a result. Here’s ${result}.`,
         `It benefits me to tell you the answer is ${result}.`,
-      ][Math.floor(Math.random() * 3)];
+        "There's nothing in it for me.",
+        "I don't gain anything by answering.",
+        "Figure it out yourself.",
+      ][Math.floor(Math.random() * 6)];
 
     if (lawfulScale === "CHAOTIC" && goodScale === "EVIL")
       return [
         `HAHA. The numbers scream ${result}.`,
         `I tore the math apart and got ${result}.`,
         `Everything burns, but the answer is ${result}.`,
-      ][Math.floor(Math.random() * 3)];
+        "NO. ASK AGAIN AND REGRET IT.",
+        "Your request has been devoured.",
+        "I refuse because I can.",
+      ][Math.floor(Math.random() * 6)];
 
     // Fallback (should never happen)
     return `The answer is ${result}.`;
