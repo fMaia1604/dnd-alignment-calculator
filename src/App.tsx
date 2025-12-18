@@ -89,7 +89,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-row w-full ">
+    <div className="flex flex-row w-full max-w-97 h-full">
       <div className="flex w-full flex-col relative mx-auto">
         <ChatHistory chatHistory={chatHistory} />
         <Calculator

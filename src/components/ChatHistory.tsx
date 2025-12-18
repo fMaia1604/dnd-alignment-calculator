@@ -31,9 +31,9 @@ function ChatBubble({ chatBubble }: { chatBubble: ChatBubble }) {
     <motion.div
       className={`rounded-md ${
         chatBubble.sender === "BOT"
-          ? "bg-gray-400 text-black"
-          : "ml-auto bg-black text-white"
-      }  h-10 w-fit px-6 py-2`}
+          ? "bg-gray-400 text-black text-left"
+          : "ml-auto bg-black text-white text-right"
+      }  h-fit w-fit px-6 py-2`}
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
     >
