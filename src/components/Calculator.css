@@ -1,6 +1,6 @@
 .calculator {
   width: 388px;
-  margin: 2rem auto;
+  margin-bottom: 2rem auto;
   background: var(--color-accent);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -86,4 +86,12 @@
     width: 100%;
     padding: 12px;
   }
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar:-webkit-scrollbar {
+  display: none;
 }
