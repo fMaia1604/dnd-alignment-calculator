@@ -14,7 +14,7 @@ export function ChatHistory({ chatHistory }: { chatHistory: ChatBubble[] }) {
     <AnimatePresence>
       <div
         ref={containerRef}
-        className="h-40 flex flex-col overflow-y-auto gap-6 hide-scrollbar"
+        className="bg-accent/40 px-4 pt-4 h-full flex flex-col overflow-y-auto gap-6 hide-scrollbar"
       >
         {chatHistory.map((chat, index) => (
           <ChatBubble key={index} chatBubble={chat} />
@@ -31,7 +31,7 @@ function ChatBubble({ chatBubble }: { chatBubble: ChatBubble }) {
     <motion.div
       className={`rounded-md ${
         chatBubble.sender === "BOT"
-          ? "bg-gray-400 text-black text-left"
+          ? "bg-[#e6e9ef] text-black text-left"
           : "ml-auto bg-black text-white text-right"
       }  h-fit w-fit px-6 py-2`}
       initial={{ opacity: 0, scale: 0 }}
