@@ -17,6 +17,8 @@ export const mapTheme = (variables: ITheme): IMappedTheme => {
     "--color-primary": variables.primary || "",
     "--color-secondary": variables.secondary || "",
     "--color-accent": variables.accent || "",
+    "--color-display": variables.display || "",
+    "--color-display-content": variables.displayContent || "",
   };
 };
 

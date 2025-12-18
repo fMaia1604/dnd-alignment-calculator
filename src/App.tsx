@@ -10,7 +10,7 @@ export type ThemeButton = {
   label: string;
   lawfulScale: "LAWFUL" | "NEUTRAL" | "CHAOTIC";
   goodScale: "GOOD" | "NEUTRAL" | "EVIL";
-  theme?: string;
+  theme: string;
 };
 
 export type ChatBubble = {
@@ -41,31 +41,37 @@ const themeButtons: ThemeButton[] = [
     label: "Lawful Neutral",
     lawfulScale: "LAWFUL",
     goodScale: "NEUTRAL",
+    theme: "lawfulNeutral",
   },
   {
     label: "True Neutral",
     lawfulScale: "NEUTRAL",
     goodScale: "NEUTRAL",
+    theme: "trueNeutral",
   },
   {
     label: "Chaotic Neutral",
     lawfulScale: "CHAOTIC",
     goodScale: "NEUTRAL",
+    theme: "chaoticNeutral",
   },
   {
     label: "Lawful Evil",
     lawfulScale: "LAWFUL",
     goodScale: "EVIL",
+    theme: "lawfulEvil",
   },
   {
     label: "Neutral Evil",
     lawfulScale: "NEUTRAL",
     goodScale: "EVIL",
+    theme: "neutralEvil",
   },
   {
     label: "Chaotic Evil",
     lawfulScale: "CHAOTIC",
     goodScale: "EVIL",
+    theme: "chaoticEvil",
   },
 ];
 

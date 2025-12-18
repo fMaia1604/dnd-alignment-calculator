@@ -1,7 +1,7 @@
 .calculator {
   width: 388px;
   margin: 2rem auto;
-  background: linear-gradient(180deg, #f6f7fb, #ffffff);
+  background: var(--color-accent);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   padding: 16px;
@@ -11,8 +11,8 @@
 
 .display {
   height: 76px;
-  background: #111827;
-  color: #fff;
+  background: var(--color-display);
+  color: var(--color-display-content);
   border-radius: 8px;
   font-size: 32px;
   display: flex;
@@ -56,6 +56,7 @@
   border-radius: 8px;
   border: none;
   background: #e6e9ef;
+  color: black;
   font-size: 18px;
   cursor: pointer;
   transition: transform 0.06s ease, box-shadow 0.06s ease;
@@ -66,7 +67,7 @@
 }
 
 .btn.operator {
-  background: #ff9500;
+  background: var(--color-primary);
   color: #fff;
 }
 .btn.equals {

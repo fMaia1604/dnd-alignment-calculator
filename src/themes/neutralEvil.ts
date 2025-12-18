@@ -1,7 +1,7 @@
 export default {
-  primary: "#2E6F40",
-  secondary: "#6BAED6",
-  accent: "#F3EFE0",
+  primary: "#2F4F2F",
+  secondary: "#5A4632",
+  accent: "#9B9B9B",
   display: "#111827",
   displayContent: "#fff",
 };
