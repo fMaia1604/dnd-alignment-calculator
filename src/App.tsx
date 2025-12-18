@@ -4,12 +4,18 @@ import Calculator from "./components/Calculator";
 import { useEffect, useState } from "react";
 import { applyTheme } from "./themes/utils";
 import { DEFAULT_THEME } from "./themes";
+import { ChatHistory } from "./components/ChatHistory";
 
 export type ThemeButton = {
   label: string;
   lawfulScale: "LAWFUL" | "NEUTRAL" | "CHAOTIC";
   goodScale: "GOOD" | "NEUTRAL" | "EVIL";
   theme?: string;
+};
+
+export type ChatBubble = {
+  message: string;
+  sender: "USER" | "BOT";
 };
 
 const themeButtons: ThemeButton[] = [
@@ -64,12 +70,13 @@ const themeButtons: ThemeButton[] = [
 ];
 
 function App() {
-  const [lawfulScale, setLawfulScale] = useState<
-    ThemeButton["lawfulScale"] | null
-  >(null);
-  const [goodScale, setGoodScale] = useState<ThemeButton["goodScale"] | null>(
-    null
-  );
+  const [lawfulScale, setLawfulScale] =
+    useState<ThemeButton["lawfulScale"]>("LAWFUL");
+  const [goodScale, setGoodScale] = useState<ThemeButton["goodScale"]>("GOOD");
+  const [chatHistory, setChatHistory] = useState<ChatBubble[]>([]);
+
+  const addChatBubble = (bubble: ChatBubble) =>
+    setChatHistory((prev) => [...prev, bubble]);
 
   useEffect(() => {
     applyTheme(DEFAULT_THEME);
@@ -78,7 +85,12 @@ function App() {
   return (
     <div className="flex flex-row w-full ">
       <div className="flex w-full flex-col relative mx-auto">
-        <Calculator lawfulScale={lawfulScale} goodScale={goodScale} />
+        <ChatHistory chatHistory={chatHistory} />
+        <Calculator
+          lawfulScale={lawfulScale}
+          goodScale={goodScale}
+          addChatBubble={addChatBubble}
+        />
       </div>
       <DialogTrigger>
         <Button className="absolute right-5 top-5 bg-gray p-2 h-fit rounded-xl">

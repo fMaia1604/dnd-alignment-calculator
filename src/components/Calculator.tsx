@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Calculator.css";
-import type { ThemeButton } from "../App";
+import type { ChatBubble, ThemeButton } from "../App";
 
 const BUTTONS: Array<{
   label: string;
@@ -37,11 +37,12 @@ const BUTTONS: Array<{
 export default function Calculator({
   lawfulScale,
   goodScale,
+  addChatBubble,
 }: {
-  lawfulScale: ThemeButton["lawfulScale"] | null;
-  goodScale: ThemeButton["goodScale"] | null;
+  lawfulScale: ThemeButton["lawfulScale"];
+  goodScale: ThemeButton["goodScale"];
+  addChatBubble: (b: ChatBubble) => void;
 }) {
-  console.log(lawfulScale);
   const [buttons, setButtons] = useState<
     {
       label: string;
@@ -184,57 +185,71 @@ export default function Calculator({
   function handleEquals() {
     if (operator == null || previous == null) return;
     const input = parseFloat(display);
+    addChatBubble({
+      message: `${previous}${operator}${input}`,
+      sender: "USER",
+    });
     const result = performOperation(previous, input, operator);
     updateDisplay(Number.isNaN(result) ? "Error" : String(result));
     setPrevious(null);
     setOperator(null);
     setWaitingForNew(true);
+    setTimeout(
+      () => addChatBubble({ message: `Result is ${result}`, sender: "BOT" }),
+      1000
+    );
   }
 
   function changeLabel(
     b: (typeof BUTTONS)[number],
-    label: "romanLabel" | "binaryLabel"
+    label: "romanLabel" | "binaryLabel" | "label"
   ) {
     return b[label] ? b[label] : b["label"];
   }
 
   function onButton(value?: string) {
+    let tempButtons = buttons;
     if (
       lawfulScale === "CHAOTIC" ||
       (lawfulScale === "NEUTRAL" && Math.random() > 0.5)
     ) {
-      setButtons(
-        buttons
-          .map((b) => ({ sort: Math.random(), value: b }))
-          .sort((a, b) => a.sort - b.sort)
-          .map((b) => b.value)
-      );
+      tempButtons = tempButtons
+        .map((b) => ({ sort: Math.random(), value: b }))
+        .sort((a, b) => a.sort - b.sort)
+        .map((b) => b.value);
     }
     if (
       lawfulScale === "CHAOTIC" ||
       (lawfulScale === "NEUTRAL" && Math.random() > 0.5)
     ) {
-      if (Math.random() > 0.5)
-        setButtons(
-          buttons.map((b) => ({
-            ...b,
-            label: changeLabel(
-              BUTTONS.find((i) => i.value === b.value)!,
-              "romanLabel"
-            ),
-          }))
-        );
+      const random = Math.random();
+      if (random < 0.33)
+        tempButtons = tempButtons.map((b) => ({
+          ...b,
+          label: changeLabel(
+            BUTTONS.find((i) => i.value === b.value)!,
+            "romanLabel"
+          ),
+        }));
+      else if (random < 0.67)
+        tempButtons = tempButtons.map((b) => ({
+          ...b,
+          label: changeLabel(
+            BUTTONS.find((i) => i.value === b.value)!,
+            "binaryLabel"
+          ),
+        }));
       else
-        setButtons(
-          buttons.map((b) => ({
-            ...b,
-            label: changeLabel(
-              BUTTONS.find((i) => i.value === b.value)!,
-              "binaryLabel"
-            ),
-          }))
-        );
+        tempButtons = tempButtons.map((b) => ({
+          ...b,
+          label: changeLabel(
+            BUTTONS.find((i) => i.value === b.value)!,
+            "label"
+          ),
+        }));
     }
+
+    setButtons(tempButtons);
     if (!value) return;
     if (/^[0-9]$/.test(value) || value === ".") return handleInput(value);
     if (value === "clear") return clearAll();
