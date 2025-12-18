@@ -19,6 +19,8 @@ export const mapTheme = (variables: ITheme): IMappedTheme => {
     "--color-accent": variables.accent || "",
     "--color-display": variables.display || "",
     "--color-display-content": variables.displayContent || "",
+    "--color-buttons": variables.buttons || "",
+    "--color-buttons-content": variables.buttonsContent || "",
   };
 };
 

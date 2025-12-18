@@ -4,4 +4,6 @@ export default {
   accent: "#C9CCD6",
   display: "#111827",
   displayContent: "#fff",
+  buttons: "#0F6B6A",
+  buttonsContent: "#ffffff",
 };
