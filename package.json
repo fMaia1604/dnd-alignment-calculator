@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "motion": "^12.23.26",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-aria-components": "^1.14.0",
+    "react-dom": "^19.2.0",
+    "typewriter-effect": "^2.22.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
